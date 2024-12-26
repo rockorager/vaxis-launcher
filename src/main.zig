@@ -180,7 +180,7 @@ const Model = struct {
                                 "%D", // deprecated
                                 "%n", // deprecated
                                 "%N", // deprecated
-                                "%i", // icone key
+                                "%i", // icon key
                                 "%c", // translated name of application
                                 "%k", // location of desktop file as uri
                                 "%v", // deprecated
