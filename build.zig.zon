@@ -1,0 +1,15 @@
+.{
+    .name = "vaxis-launcher",
+    .version = "0.0.0",
+    .dependencies = .{
+        .vaxis = .{
+            .url = "git+https://github.com/rockorager/libvaxis?ref=zig-0.14.0#34f3290ac1ffa6bcc0a968141f116c2830187b46",
+            .hash = "122086621dccc4755a77592840b8e87166ed1958461a73171f4371684f6662b6578b",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
