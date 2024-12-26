@@ -1,3 +1,13 @@
+/// Change this to your launch command. Example:
+///     swaymsg exec
+const launch_cmd: []const []const u8 = &.{ "swaymsg", "exec" };
+
+/// Change this to your launchable terminal command. Some examples
+///     xdg-terminal-exec
+///     ghostty -e
+///     foot -e
+const terminal_cmd: []const []const u8 = &.{"xdg-terminal-exec"};
+
 const std = @import("std");
 const vaxis = @import("vaxis");
 
@@ -197,14 +207,18 @@ const Model = struct {
                                 try exec.appendSlice(item);
                             }
 
-                            const argv = &.{
-                                "swaymsg",
-                                "exec",
-                                exec.items,
-                            };
+                            var argv = std.ArrayList([]const u8).init(self.gpa);
+                            defer argv.deinit();
 
-                            var launch = std.process.Child.init(argv, self.gpa);
+                            // Build argv
+                            try argv.appendSlice(launch_cmd);
+                            if (main_group.terminal())
+                                try argv.appendSlice(terminal_cmd);
+                            try argv.append(exec.items);
+
+                            var launch = std.process.Child.init(argv.items, self.gpa);
                             const ret = try launch.spawnAndWait();
+
                             switch (ret) {
                                 .Exited => |code| {
                                     if (code != 0) {
@@ -450,11 +464,23 @@ const DesktopEntry = struct {
 
         pub fn exec(self: Group) ?[]const u8 {
             for (self.entries) |entry| {
-                if (!std.mem.eql(u8, "Exec", entry.key))
+                if (!mem.eql(u8, "Exec", entry.key))
                     continue;
                 return entry.value;
             }
             return null;
+        }
+
+        pub fn terminal(self: Group) bool {
+            for (self.entries) |entry| {
+                if (!mem.eql(u8, "Terminal", entry.key))
+                    continue;
+                if (std.ascii.eqlIgnoreCase("true", entry.value)) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
     };
 
