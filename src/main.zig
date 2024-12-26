@@ -316,15 +316,6 @@ const Model = struct {
         const ptr = maybe_ptr orelse unreachable;
         const self: *Model = @ptrCast(@alignCast(ptr));
         const cmd = self.cmd.stdin orelse unreachable;
-        {
-            const activate = try std.fmt.allocPrint(
-                self.gpa,
-                request.complete,
-                .{self.list_view.cursor},
-            );
-            defer self.gpa.free(activate);
-            try cmd.writeAll(activate);
-        }
 
         const activate = try std.fmt.allocPrint(
             self.gpa,
