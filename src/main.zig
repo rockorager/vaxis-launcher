@@ -363,8 +363,17 @@ const Model = struct {
                 },
             };
             spans[1] = .{ .text = "  " };
+
+            var description = item.description;
+            if (std.mem.startsWith(u8, description, "System"))
+                description = description[6..];
+            if (std.mem.startsWith(u8, description, "User"))
+                description = description[4..];
+            if (std.mem.startsWith(u8, description, " - "))
+                description = description[3..];
+
             spans[2] = .{
-                .text = item.description,
+                .text = description,
                 .style = .{ .italic = true },
             };
             try self.list.append(.{ .text = spans });
