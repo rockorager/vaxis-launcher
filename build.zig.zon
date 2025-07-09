@@ -1,10 +1,11 @@
 .{
-    .name = "vaxis-launcher",
+    .name = .vaxis_launcher,
+    .fingerprint = 0xb7878718723c4a8e,
     .version = "0.0.0",
     .dependencies = .{
         .vaxis = .{
-            .url = "git+https://github.com/rockorager/libvaxis?ref=zig-0.14.0#34f3290ac1ffa6bcc0a968141f116c2830187b46",
-            .hash = "122086621dccc4755a77592840b8e87166ed1958461a73171f4371684f6662b6578b",
+            .url = "git+https://github.com/rockorager/libvaxis#cc9154d5f4afa3fdfd289157f195ec67804ef437",
+            .hash = "vaxis-0.5.1-BWNV_MYNCQDO92x2PTpsfv6GwDHmjL98rf6iL3pbMLj4",
         },
     },
     .paths = .{
